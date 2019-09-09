@@ -25,19 +25,5 @@ public class MainActivity extends AppCompatActivity {
         ListSongsFragment fragment = new ListSongsFragment();
         fragmentTransaction.add(R.id.container, fragment);
         fragmentTransaction.commit();
-
-
-
-
-
-
-        Button button1 = (Button) findViewById(R.id.btn_stop);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //audioPlayer.stop();
-
-            }
-        });
     }
 }

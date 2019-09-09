@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -71,15 +73,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // Song file name
                 mAudioPlayer.checkMediaPlayer(mSongs.get(position).getFileName());
 
+
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                MediaPlayer myFragment = new MediaPlayer();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
+
+
                 Toast.makeText(mContext, mSongs.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onBindViewHolder: working.");
             }
         });
 
-        AppCompatActivity activity = (AppCompatActivity) mContext;
-        Fragment newFragment = new MediaPlayer();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.recyclerv_view, newFragment)
-                .addToBackStack(null).commit();
-        Log.d(TAG, "onBindViewHolder: working.");
+
 
 
     }
