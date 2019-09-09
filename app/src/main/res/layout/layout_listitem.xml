@@ -21,7 +21,7 @@
         android:text="Insert song"
         android:id="@+id/image_name"
         android:layout_toEndOf="@+id/image"
-        android:textColor="#ffffff"
+        android:textColor="#56a5eb"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30dp"
         android:textSize="17dp"
