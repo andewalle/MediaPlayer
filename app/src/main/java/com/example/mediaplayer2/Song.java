@@ -2,7 +2,7 @@ package com.example.mediaplayer2;
 
 import android.graphics.Bitmap;
 
-public class Song {
+public class Song{
 
 
     private String artist;

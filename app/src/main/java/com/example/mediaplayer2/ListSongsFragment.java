@@ -31,13 +31,8 @@ public class ListSongsFragment extends Fragment {
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<Song> mSongs = new ArrayList<>();
-
-
     private SectonsStatePagerAdapter mSectionStatePagerAdapter;
     private RecyclerView recyclerView;
-
-
-
     public String name;
 
     AudioPlayer audioPlayer;
@@ -46,10 +41,7 @@ public class ListSongsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,20 +61,14 @@ public class ListSongsFragment extends Fragment {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
         recyclerView.setAdapter(adapter);
 
-            //changed to getContext from this.
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         try {
             initSongList();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
 
 
         return view;
@@ -105,8 +91,6 @@ public class ListSongsFragment extends Fragment {
 
         Log.d("list", it.toString());
         Log.d("list", mNames.toString());
-
-
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
 
 
@@ -132,12 +116,4 @@ public class ListSongsFragment extends Fragment {
         Log.d("duration", mSongs.get(0).getDuration());
 
     }
-
-
-
-
-
-
-
-
 }

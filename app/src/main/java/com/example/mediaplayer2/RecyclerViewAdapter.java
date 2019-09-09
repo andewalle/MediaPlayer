@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -51,16 +53,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
+
         Log.d(TAG, "onBindViewHolder: called.");
-
-
-
 
         Glide.with(mContext)
                 .asBitmap()
                 .load(mSongs.get(position).getCover())
                 .into(holder.image);
-
 
         //Song names
         holder.songName.setText(mSongs.get(position).getTitle());
@@ -75,6 +74,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Toast.makeText(mContext, mSongs.get(position).getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        AppCompatActivity activity = (AppCompatActivity) mContext;
+        Fragment newFragment = new MediaPlayer();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.recyclerv_view, newFragment)
+                .addToBackStack(null).commit();
+        Log.d(TAG, "onBindViewHolder: working.");
+
 
     }
 
