@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private ArrayList<String> mNames = new ArrayList<>();
+    /*private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<Song> mSongs = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public String name;
 
     AudioPlayer audioPlayer;
-
+*/
 
 
     @Override
@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-
-
         ListSongsFragment fragment = new ListSongsFragment();
         fragmentTransaction.add(R.id.container, fragment);
         fragmentTransaction.commit();
@@ -61,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        recyclerView = findViewById(R.id.recyclerv_view);
+        /*recyclerView = findViewById(R.id.recyclerv_view);
 
-        audioPlayer = new AudioPlayer(name, getApplicationContext());
+        audioPlayer = new AudioPlayer(name, getApplicationContext());*/
 
 
         /*Button button = (Button) findViewById(R.id.btn_start);
@@ -79,19 +76,20 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                audioPlayer.stop();
+                //audioPlayer.stop();
 
             }
         });
 
-        initRecyclerView();
+        /*initRecyclerView();
         try {
             initSongList();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
+    /*
     private void initSongList() throws IOException {
 
         AssetManager assetManager = getAssets();
@@ -145,5 +143,5 @@ public class MainActivity extends AppCompatActivity {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mSongs, audioPlayer);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+    }*/
 }

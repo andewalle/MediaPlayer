@@ -28,13 +28,26 @@ public class ListSongsFragment extends Fragment {
     private static final String TAG = "ListSongsFragment";
 
 
+    private ArrayList<String> mNames = new ArrayList<>();
+    private ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<Song> mSongs = new ArrayList<>();
+
+
+    private SectonsStatePagerAdapter mSectionStatePagerAdapter;
+    private RecyclerView recyclerView;
+
+
+
+    public String name;
+
     AudioPlayer audioPlayer;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
 
@@ -42,8 +55,88 @@ public class ListSongsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.listsongsfragment_layout, container, false);
+        View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
+
+        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerv_view);
+
+        audioPlayer = new AudioPlayer(name, getContext());
+
+
+        Log.d(TAG, "initRecyclerView: init recyclerview.");
+        RecyclerView recyclerView =  view.findViewById(R.id.recyclerv_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
+        recyclerView.setAdapter(adapter);
+
+            //changed to getContext from this.
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+
+        try {
+            initSongList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+        return view;
     }
+
+    private void initSongList() throws IOException {
+
+        AssetManager assetManager = getContext().getAssets();
+        String[] files = assetManager.list("");
+
+
+
+        List<String> it = new LinkedList<String>(Arrays.asList(files));
+        for (int i = 0; i <it.size(); i++) {
+            if (it.get(i).endsWith(".mp3")){
+                mNames.add(it.get(i));
+            }
+
+        }
+
+        Log.d("list", it.toString());
+        Log.d("list", mNames.toString());
+
+
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+
+
+        for (int i = 0; i < mNames.size(); i++) {
+            AssetFileDescriptor fileDescriptor = getContext().getAssets().openFd(mNames.get(i));
+            mediaMetadataRetriever.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+
+            String title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+            String artist = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+            String duration = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            String fileName = mNames.get(i);
+            byte cover [] = mediaMetadataRetriever.getEmbeddedPicture();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
+            if (cover != null) {
+
+                bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
+            }
+            Song song = new Song(artist, duration, title, fileName, bitmap);
+            mSongs.add(song);
+
+        }
+        Log.d("artist123", mSongs.get(0).getArtist());
+        Log.d("duration", mSongs.get(0).getDuration());
+
+    }
+
+
+
+
+
 
 
 
