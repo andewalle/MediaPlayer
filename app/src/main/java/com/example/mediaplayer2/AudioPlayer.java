@@ -1,15 +1,17 @@
 package com.example.mediaplayer2;
 import java.io.IOException;
+import java.io.Serializable;
+
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
-public class AudioPlayer {
+public class AudioPlayer implements Serializable {
 
-    String fileName;
-    Context contex;
-    MediaPlayer mp;
+    private String fileName;
+    private Context contex;
+    private MediaPlayer mp;
 
     //Constructor
     public AudioPlayer(String name, Context context) {
@@ -29,6 +31,14 @@ public class AudioPlayer {
             mp = null;
             playAudio(songName);
         }
+
+    }
+
+    public void checkMediaPlayerStop(){
+        if (mp != null){
+            mp.stop();
+        }
+        else{}
 
     }
 

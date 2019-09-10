@@ -33,12 +33,15 @@ public class ListSongsFragment extends Fragment {
     private RecyclerView recyclerView;
     public String name;
 
-    AudioPlayer audioPlayer;
+    //AudioPlayer audioPlayer;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
     }
 
     @Override
@@ -51,7 +54,10 @@ public class ListSongsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerv_view);
 
-        audioPlayer = new AudioPlayer(name, getContext());
+        //Hämta audioplayer från bundle. inte skapa ny
+        //Bundle bundle = getIntent();
+        AudioPlayer audioPlayer = (AudioPlayer)  new AudioPlayer(name, getContext());
+
 
 
         Log.d(TAG, "initRecyclerView: init recyclerview.");

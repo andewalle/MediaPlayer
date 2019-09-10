@@ -32,10 +32,11 @@ public class MediaPlayer extends Fragment {
         button_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                audioPlayer.stop();
+                audioPlayer.checkMediaPlayerStop();
 
             }
         });
+
         Button button_exit = (Button) view.findViewById(R.id.btn_exit);
         button_exit.setOnClickListener(new View.OnClickListener() {
             @Override
