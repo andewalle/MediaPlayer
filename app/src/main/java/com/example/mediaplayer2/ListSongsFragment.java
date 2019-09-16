@@ -1,5 +1,4 @@
 package com.example.mediaplayer2;
-
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -14,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,19 +27,16 @@ public class ListSongsFragment extends Fragment {
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<Song> mSongs = new ArrayList<>();
-    private SectonsStatePagerAdapter mSectionStatePagerAdapter;
+    private SectionsStatePagerAdapter mSectionStatePagerAdapter;
     private RecyclerView recyclerView;
     public String name;
 
-    //AudioPlayer audioPlayer;
+    AudioPlayer audioPlayer;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
@@ -54,11 +49,15 @@ public class ListSongsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerv_view);
 
+
         //Hämta audioplayer från bundle. inte skapa ny
-        //Bundle bundle = getIntent();
-        AudioPlayer audioPlayer = (AudioPlayer)  new AudioPlayer(name, getContext());
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null){
+            audioPlayer = bundle.getParcelable("audioplayer" );
+        }
 
+        //audioPlayer = (AudioPlayer)  new AudioPlayer(name, getContext());
 
         Log.d(TAG, "initRecyclerView: init recyclerview.");
         RecyclerView recyclerView =  view.findViewById(R.id.recyclerv_view);
@@ -82,8 +81,6 @@ public class ListSongsFragment extends Fragment {
 
         AssetManager assetManager = getContext().getAssets();
         String[] files = assetManager.list("");
-
-
 
         List<String> it = new LinkedList<String>(Arrays.asList(files));
         for (int i = 0; i <it.size(); i++) {
@@ -118,6 +115,5 @@ public class ListSongsFragment extends Fragment {
         }
         Log.d("artist123", mSongs.get(0).getArtist());
         Log.d("duration", mSongs.get(0).getDuration());
-
     }
 }

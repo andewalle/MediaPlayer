@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class AudioPlayer implements Serializable {
+public class AudioPlayer implements Parcelable {
 
     private String fileName;
     private Context contex;
@@ -20,7 +22,23 @@ public class AudioPlayer implements Serializable {
 
     }
 
-    public void checkMediaPlayer(final String songName){
+    protected AudioPlayer(Parcel in) {
+        fileName = in.readString();
+    }
+
+    public static final Creator<AudioPlayer> CREATOR = new Creator<AudioPlayer>() {
+        @Override
+        public AudioPlayer createFromParcel(Parcel in) {
+            return new AudioPlayer(in);
+        }
+
+        @Override
+        public AudioPlayer[] newArray(int size) {
+            return new AudioPlayer[size];
+        }
+    };
+
+    public void checkAudioPlayer(final String songName){
 
         if (mp == null){
             playAudio(songName);
@@ -34,7 +52,7 @@ public class AudioPlayer implements Serializable {
 
     }
 
-    public void checkMediaPlayerStop(){
+    public void checkAudioPlayerStop(){
         if (mp != null){
             mp.stop();
         }
@@ -42,14 +60,20 @@ public class AudioPlayer implements Serializable {
 
     }
 
+
     //Play Audio
     public void playAudio(final String songName) {
 
-            mp = new MediaPlayer();
+        mp = new MediaPlayer();
 
 
             try {
                 AssetFileDescriptor descriptor;
+                if (contex == null){
+                    return;
+
+
+                }
                 descriptor = contex.getAssets()
                         .openFd(songName);
                 mp.setDataSource(descriptor.getFileDescriptor(),
@@ -77,5 +101,24 @@ public class AudioPlayer implements Serializable {
 
     }
 
+    public void pause(){
+        mp.pause();
+    }
 
+    public void continuePlay(){
+        mp.start();
+    }
+
+
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(fileName);
+    }
 }

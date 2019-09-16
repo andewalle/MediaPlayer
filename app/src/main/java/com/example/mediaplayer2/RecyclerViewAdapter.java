@@ -1,8 +1,7 @@
 package com.example.mediaplayer2;
-
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.provider.MediaStore;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +9,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
@@ -39,10 +34,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mAudioPlayer = audioPlayer;
 
     }
-
-
-
-
 
     @NonNull
     @Override
@@ -71,21 +62,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked on: "+ mSongs.get(position).getTitle());
                 // Song file name
-                mAudioPlayer.checkMediaPlayer(mSongs.get(position).getFileName());
+//                mAudioPlayer.playAudio(mSongs.get(position).getFileName());
+                mAudioPlayer.checkAudioPlayer(mSongs.get(position).getFileName());
 
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("audioplayer", mAudioPlayer);
 
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                MediaPlayer myFragment = new MediaPlayer();
+                MediaPlayerFragment myFragment = new MediaPlayerFragment();
+                myFragment.setArguments(bundle);
+
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
+
+
+
+
 
 
                 Toast.makeText(mContext, mSongs.get(position).getTitle(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onBindViewHolder: working.");
+
+
             }
         });
-
-
-
 
     }
 

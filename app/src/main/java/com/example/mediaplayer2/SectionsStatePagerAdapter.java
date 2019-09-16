@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectonsStatePagerAdapter extends FragmentStatePagerAdapter {
+public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
 
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -15,7 +15,7 @@ public class SectonsStatePagerAdapter extends FragmentStatePagerAdapter {
 
 
 
-    public SectonsStatePagerAdapter(FragmentManager fm) {
+    public SectionsStatePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
