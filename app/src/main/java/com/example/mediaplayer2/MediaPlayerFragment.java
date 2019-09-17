@@ -31,6 +31,8 @@ public class MediaPlayerFragment extends Fragment {
     private TextView remainingTimeLabel;
     int totalTime;
 
+    private SeekBar volumeBar;
+
     ImageView imageHolder;
     TextView infoText;
 
@@ -79,6 +81,10 @@ public class MediaPlayerFragment extends Fragment {
     };
 
 
+
+
+
+
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -95,14 +101,34 @@ public class MediaPlayerFragment extends Fragment {
 
         infoText = (TextView) view.findViewById(R.id.infotext);
 
+        volumeBar = (SeekBar) view.findViewById(R.id.volume);
 
-        Glide.with(this)
-                .asBitmap()
-                .load(mSongs.get(position).getCover())
-                .into(imageHolder);
+        updateInfo();
 
-        String info = mSongs.get(position).getArtist() + " - " + mSongs.get(position).getTitle();
-        infoText.setText(info);
+
+        volumeBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                        float volumeNum = progress / 100f;
+                        audioPlayer.mp.setVolume(volumeNum, volumeNum);
+
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
+
 
 
         Bundle bundle = this.getArguments();
@@ -151,8 +177,6 @@ public class MediaPlayerFragment extends Fragment {
             }
         });
 
-
-
         Button button_exit = (Button) view.findViewById(R.id.btn_exit);
         button_exit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,23 +195,50 @@ public class MediaPlayerFragment extends Fragment {
         });
 
 
-//        Button button_forward = (Button) view.findViewById(R.id.btn_stop);
-//        button_forward.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //audioPlayer.stop();
-//
-//            }
-//        });
-//        Button button_back = (Button) view.findViewById(R.id.btn_stop);
-//        button_back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //audioPlayer.stop();
-//
-//            }
-//        });
+        Button button_forward = (Button) view.findViewById(R.id.btn_forward);
+        button_forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                audioPlayer.stop();
+
+                position = position +1;
+                if (mSongs.size() == position){
+                    position = 0;
+                }
+                audioPlayer.playAudio(mSongs.get(position).getFileName());
+                updateInfo();
+                totalTime = audioPlayer.mp.getDuration();
+
+
+            }
+        });
+        Button button_back = (Button) view.findViewById(R.id.btn_back);
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                audioPlayer.stop();
+
+                position = position -1;
+                if (position < 0){
+                    position = mSongs.size() - 1;
+                }
+                audioPlayer.playAudio(mSongs.get(position).getFileName());
+                updateInfo();
+                totalTime = audioPlayer.mp.getDuration();
+
+            }
+        });
 
         return view;
+    }
+    public void updateInfo(){
+
+        Glide.with(this)
+                .asBitmap()
+                .load(mSongs.get(position).getCover())
+                .into(imageHolder);
+
+        String info = mSongs.get(position).getArtist() + " - " + mSongs.get(position).getTitle();
+        infoText.setText(info);
     }
 }

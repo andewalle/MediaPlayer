@@ -96,7 +96,7 @@ public class AudioPlayer implements Parcelable {
             mp.prepare();
             mp.setLooping(true);
             mp.start();
-            mp.setVolume(7, 7);
+            mp.setVolume(0.5f, 0.5f);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
             e.printStackTrace();
