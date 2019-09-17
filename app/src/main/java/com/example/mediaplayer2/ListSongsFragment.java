@@ -60,7 +60,7 @@ public class ListSongsFragment extends Fragment {
         //audioPlayer = (AudioPlayer)  new AudioPlayer(name, getContext());
 
         Log.d(TAG, "initRecyclerView: init recyclerview.");
-        RecyclerView recyclerView =  view.findViewById(R.id.recyclerv_view);
+        recyclerView =  view.findViewById(R.id.recyclerv_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
         recyclerView.setAdapter(adapter);
 

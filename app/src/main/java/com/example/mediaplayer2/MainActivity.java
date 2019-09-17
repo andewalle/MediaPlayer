@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started.");
         context = getApplicationContext();
-        ap = new AudioPlayer("", context);
+        ap = new AudioPlayer("", context, this);
 
 //
         Intent intent = new Intent(MainActivity.this , ListSongsFragment.class);

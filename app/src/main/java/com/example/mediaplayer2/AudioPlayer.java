@@ -19,17 +19,18 @@ public class AudioPlayer implements Parcelable {
 
     private String fileName;
     private Context contex;
-    private MediaPlayer mp;
-    SeekBar positionBar;
-    TextView elapsedTimeLabel;
-    TextView remainingTimeLabel;
-    int totalTime;
+    public MediaPlayer mp;
+    private Activity activity;
 
-    
+
+
+
     //Constructor
-    public AudioPlayer(String name, Context context) {
+    public AudioPlayer(String name, Context context, Activity activity) {
         fileName = name;
         contex = context;
+        this.activity = activity;
+
 
     }
 
@@ -76,7 +77,7 @@ public class AudioPlayer implements Parcelable {
     public void playAudio(final String songName) {
 
         mp = new MediaPlayer();
-        mp.seekTo(0);
+
 
 
         try {
@@ -103,57 +104,21 @@ public class AudioPlayer implements Parcelable {
             e.printStackTrace();
         }
 
-        totalTime = mp.getDuration();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (mp != null) {
-
-                    try {
-                        Message msg = new Message();
-                        msg.what = mp.getCurrentPosition();
-                        handler.sendMessage(msg);
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }
-        }).start();
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg){
-                int currentPosition = msg.what;
-                positionBar.setProgress(currentPosition);
-                String elapsedTime = createTimeLabel(currentPosition);
-                elapsedTimeLabel.setText(elapsedTime);
-
-                String remaingTime = createTimeLabel(totalTime - currentPosition);
-                remainingTimeLabel.setText(remaingTime);
-            }
-
-    };
-
-    public String createTimeLabel(int time){
-
-        String timeLabel = "";
-        int min = time / 1000 / 60;
-        int sec = time / 1000 % 60;
-
-        timeLabel = min + ":";
-        if (sec < 10) timeLabel += "0";
-        timeLabel += sec;
-
-        return timeLabel;
-
-
-    }
+//    public String createTimeLabel(int time){
+//
+//        String timeLabel = "";
+//        int min = time / 1000 / 60;
+//        int sec = time / 1000 % 60;
+//
+//        timeLabel = min + ":";
+//        if (sec < 10) timeLabel += "0";
+//        timeLabel += sec;
+//
+//        return timeLabel;
+//
+//    }
 
     //Stop Audio
     public void stop() {

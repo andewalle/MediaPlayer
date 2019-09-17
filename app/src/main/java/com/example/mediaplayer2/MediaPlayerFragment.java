@@ -1,9 +1,11 @@
 package com.example.mediaplayer2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +22,18 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MediaPlayerFragment extends Fragment {
 
     AudioPlayer audioPlayer;
     int playOrStop = 0;
+
+    SeekBar positionBar;
+    TextView elapsedTimeLabel;
+    TextView remainingTimeLabel;
+    int totalTime;
+
 
 
 
@@ -32,7 +42,40 @@ public class MediaPlayerFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
+
     }
+
+
+
+    public String createTimeLabel(int time){
+
+        String timeLabel = "";
+        int min = time / 1000 / 60;
+        int sec = time / 1000 % 60;
+
+        timeLabel = min + ":";
+        if (sec < 10) timeLabel += "0";
+        timeLabel += sec;
+
+        return timeLabel;
+
+    }
+
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int currentPosition = msg.what;
+            positionBar.setProgress(currentPosition);
+            String elapsedTime = createTimeLabel(currentPosition);
+            elapsedTimeLabel.setText(elapsedTime);
+
+            String remaingTime = createTimeLabel(totalTime - currentPosition);
+            remainingTimeLabel.setText(remaingTime);
+        }
+    };
 
 
     @Override
@@ -41,10 +84,40 @@ public class MediaPlayerFragment extends Fragment {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.mediaplayer_layout, container, false);
 
+        positionBar = (SeekBar) view.findViewById(R.id.seekbar);
+
+        remainingTimeLabel = (TextView) view.findViewById(R.id.timeleft);
+
+        elapsedTimeLabel = (TextView) view.findViewById(R.id.elapsedtime);
+
+
+
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
         }
+
+        audioPlayer.mp.seekTo(0);
+
+        totalTime = audioPlayer.mp.getDuration();
+
+        positionBar.setMax(totalTime);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (audioPlayer.mp != null) {
+                        try {
+                            Message msg = new Message();
+                            msg.what = audioPlayer.mp.getCurrentPosition();
+                            handler.sendMessage(msg);
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
 
 //        Glide.with(getContext())
 //                .asBitmap()
