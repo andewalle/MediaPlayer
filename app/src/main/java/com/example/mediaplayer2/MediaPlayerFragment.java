@@ -33,6 +33,8 @@ public class MediaPlayerFragment extends Fragment {
 
     private SeekBar volumeBar;
 
+    int muted = 0;
+
     ImageView imageHolder;
     TextView infoText;
 
@@ -80,11 +82,6 @@ public class MediaPlayerFragment extends Fragment {
         }
     };
 
-
-
-
-
-
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -104,6 +101,29 @@ public class MediaPlayerFragment extends Fragment {
         volumeBar = (SeekBar) view.findViewById(R.id.volume);
 
         updateInfo();
+
+        positionBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        if (fromUser) {
+                            audioPlayer.mp.seekTo(progress);
+                            positionBar.setProgress(progress);
+                        }
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
 
 
         volumeBar.setOnSeekBarChangeListener(
@@ -151,15 +171,15 @@ public class MediaPlayerFragment extends Fragment {
                             msg.what = audioPlayer.mp.getCurrentPosition();
                             handler.sendMessage(msg);
                             Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        }catch (InterruptedException q) {
+                            q.printStackTrace();
                         }
                     }
                 }
             }).start();
 
 
-        Button button_start = (Button) view.findViewById(R.id.btn_start);
+        final Button button_start = (Button) view.findViewById(R.id.btn_start);
         button_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,10 +187,12 @@ public class MediaPlayerFragment extends Fragment {
                 if (playOrStop == 0) {
                     audioPlayer.pause();
                     playOrStop = 1;
+                    button_start.setBackgroundResource(R.drawable.ic_start);
                 }
                 else{
                     audioPlayer.continuePlay();
                     playOrStop = 0;
+                    button_start.setBackgroundResource(R.drawable.ic_pause);
 
                 }
 
@@ -194,12 +216,12 @@ public class MediaPlayerFragment extends Fragment {
             }
         });
 
-
         Button button_forward = (Button) view.findViewById(R.id.btn_forward);
         button_forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 audioPlayer.stop();
+
 
                 position = position +1;
                 if (mSongs.size() == position){
@@ -218,6 +240,7 @@ public class MediaPlayerFragment extends Fragment {
             public void onClick(View view) {
                 audioPlayer.stop();
 
+
                 position = position -1;
                 if (position < 0){
                     position = mSongs.size() - 1;
@@ -228,6 +251,31 @@ public class MediaPlayerFragment extends Fragment {
 
             }
         });
+
+        final Button button_mute = (Button) view.findViewById(R.id.btn_mute);
+
+        button_mute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                if (muted == 0) {
+                    audioPlayer.mp.setVolume(0, 0);
+                    muted = 1;
+                    button_mute.setBackgroundResource(R.drawable.ic_muted);
+                }
+                else {
+                    audioPlayer.mp.setVolume(0.5f, 0.5f);
+                    muted = 0;
+                    button_mute.setBackgroundResource(R.drawable.ic_volume);
+                }
+
+
+
+
+
+        }});
 
         return view;
     }

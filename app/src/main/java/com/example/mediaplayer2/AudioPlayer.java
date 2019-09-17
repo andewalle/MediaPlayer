@@ -22,9 +22,6 @@ public class AudioPlayer implements Parcelable {
     public MediaPlayer mp;
     private Activity activity;
 
-
-
-
     //Constructor
     public AudioPlayer(String name, Context context, Activity activity) {
         fileName = name;
@@ -78,14 +75,10 @@ public class AudioPlayer implements Parcelable {
 
         mp = new MediaPlayer();
 
-
-
         try {
             AssetFileDescriptor descriptor;
             if (contex == null) {
                 return;
-
-
             }
             descriptor = contex.getAssets()
                     .openFd(songName);
