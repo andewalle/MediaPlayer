@@ -71,6 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 MediaPlayerFragment myFragment = new MediaPlayerFragment();
                 myFragment.setArguments(bundle);
+                myFragment.getList(mSongs, position);
 
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
 

@@ -14,40 +14,41 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
-
 import java.io.IOException;
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class MediaPlayerFragment extends Fragment {
 
     AudioPlayer audioPlayer;
     int playOrStop = 0;
 
-    SeekBar positionBar;
-    TextView elapsedTimeLabel;
-    TextView remainingTimeLabel;
+    private SeekBar positionBar;
+    private TextView elapsedTimeLabel;
+    private TextView remainingTimeLabel;
     int totalTime;
 
+    ImageView imageHolder;
+    TextView infoText;
 
+    private ArrayList<Song> mSongs = new ArrayList<>();
+    private Context mContext;
+    private int position;
 
+    public void getList(ArrayList<Song> mSongs, int position){
 
+        this.mSongs = mSongs;
+        this.position = position;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
     }
-
-
 
     public String createTimeLabel(int time){
 
@@ -90,6 +91,18 @@ public class MediaPlayerFragment extends Fragment {
 
         elapsedTimeLabel = (TextView) view.findViewById(R.id.elapsedtime);
 
+        imageHolder = (ImageView) view.findViewById(R.id.coverimage);
+
+        infoText = (TextView) view.findViewById(R.id.infotext);
+
+
+        Glide.with(this)
+                .asBitmap()
+                .load(mSongs.get(position).getCover())
+                .into(imageHolder);
+
+        String info = mSongs.get(position).getArtist() + " - " + mSongs.get(position).getTitle();
+        infoText.setText(info);
 
 
         Bundle bundle = this.getArguments();
@@ -118,12 +131,6 @@ public class MediaPlayerFragment extends Fragment {
                     }
                 }
             }).start();
-
-//        Glide.with(getContext())
-//                .asBitmap()
-//                .load(mSongs.get(position).getCover())
-//                .into(holder.image);
-
 
 
         Button button_start = (Button) view.findViewById(R.id.btn_start);
@@ -180,12 +187,6 @@ public class MediaPlayerFragment extends Fragment {
 //
 //            }
 //        });
-
-
-
-
-
-
 
         return view;
     }
