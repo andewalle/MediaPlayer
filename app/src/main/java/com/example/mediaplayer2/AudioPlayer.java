@@ -20,13 +20,12 @@ public class AudioPlayer implements Parcelable {
     private String fileName;
     private Context contex;
     public MediaPlayer mp;
-    private Activity activity;
+
 
     //Constructor
-    public AudioPlayer(String name, Context context, Activity activity) {
+    public AudioPlayer(String name, Context context) {
         fileName = name;
         contex = context;
-        this.activity = activity;
 
 
     }
@@ -54,6 +53,7 @@ public class AudioPlayer implements Parcelable {
         }
 
         else{
+            mp.pause();
             mp.release();
             mp = null;
             playAudio(songName);
@@ -68,7 +68,6 @@ public class AudioPlayer implements Parcelable {
         else{}
 
     }
-
 
     //Play Audio
     public void playAudio(final String songName) {

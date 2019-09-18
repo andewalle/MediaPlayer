@@ -9,10 +9,12 @@ public class Song{
     private String duration;
     private String title;
     private String fileName;
+    private String album;
     private Bitmap cover;
 
 
-    public Song(String artist, String duration, String title, String fileName, Bitmap cover) {
+
+    public Song(String artist, String duration, String title, String fileName, String album, Bitmap cover) {
         this.artist = artist;
         this.duration = duration;
         this.title = title;
@@ -58,5 +60,13 @@ public class Song{
 
     public void setCover(Bitmap cover) {
         this.cover = cover;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
 }

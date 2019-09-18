@@ -23,23 +23,22 @@ import java.util.ArrayList;
 
 public class MediaPlayerFragment extends Fragment {
 
-    AudioPlayer audioPlayer;
-    int playOrStop = 0;
+    private AudioPlayer audioPlayer;
+    private int playOrStop = 0;
 
     private SeekBar positionBar;
     private TextView elapsedTimeLabel;
     private TextView remainingTimeLabel;
-    int totalTime;
+    private int totalTime;
 
     private SeekBar volumeBar;
 
-    int muted = 0;
+    private int muted = 0;
 
-    ImageView imageHolder;
-    TextView infoText;
+    private ImageView imageHolder;
+    private TextView infoText;
 
     private ArrayList<Song> mSongs = new ArrayList<>();
-    private Context mContext;
     private int position;
 
     public void getList(ArrayList<Song> mSongs, int position){
@@ -54,33 +53,6 @@ public class MediaPlayerFragment extends Fragment {
 
     }
 
-    public String createTimeLabel(int time){
-
-        String timeLabel = "";
-        int min = time / 1000 / 60;
-        int sec = time / 1000 % 60;
-
-        timeLabel = min + ":";
-        if (sec < 10) timeLabel += "0";
-        timeLabel += sec;
-
-        return timeLabel;
-
-    }
-
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            int currentPosition = msg.what;
-            positionBar.setProgress(currentPosition);
-            String elapsedTime = createTimeLabel(currentPosition);
-            elapsedTimeLabel.setText(elapsedTime);
-
-            String remaingTime = createTimeLabel(totalTime - currentPosition);
-            remainingTimeLabel.setText(remaingTime);
-        }
-    };
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,8 +72,7 @@ public class MediaPlayerFragment extends Fragment {
 
         volumeBar = (SeekBar) view.findViewById(R.id.volume);
 
-        updateInfo();
-
+//        Song seekbar control
         positionBar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
                     @Override
@@ -110,22 +81,18 @@ public class MediaPlayerFragment extends Fragment {
                             audioPlayer.mp.seekTo(progress);
                             positionBar.setProgress(progress);
                         }
-
                     }
 
                     @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
+                    public void onStartTrackingTouch(SeekBar seekBar) { }
 
                     @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
-                    }
+                    public void onStopTrackingTouch(SeekBar seekBar) { }
                 }
         );
 
 
+//        Volume control
         volumeBar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
                     @Override
@@ -133,34 +100,30 @@ public class MediaPlayerFragment extends Fragment {
 
                         float volumeNum = progress / 100f;
                         audioPlayer.mp.setVolume(volumeNum, volumeNum);
-
-
                     }
 
                     @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
+                    public void onStartTrackingTouch(SeekBar seekBar) { }
 
                     @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
-                    }
+                    public void onStopTrackingTouch(SeekBar seekBar) { }
                 }
         );
 
 
-
+//  Taking the bundle from ListSingsFragment
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
         }
 
-        audioPlayer.mp.seekTo(0);
-
         totalTime = audioPlayer.mp.getDuration();
 
-        positionBar.setMax(totalTime);
+//        positionBar.setMax(totalTime);
+
+        audioPlayer.mp.seekTo(0);
+
+        updateInfo();
 
             new Thread(new Runnable() {
                 @Override
@@ -168,6 +131,7 @@ public class MediaPlayerFragment extends Fragment {
                     while (audioPlayer.mp != null) {
                         try {
                             Message msg = new Message();
+                            positionBar.setMax(totalTime);
                             msg.what = audioPlayer.mp.getCurrentPosition();
                             handler.sendMessage(msg);
                             Thread.sleep(1000);
@@ -220,9 +184,8 @@ public class MediaPlayerFragment extends Fragment {
         button_forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                audioPlayer.stop();
-
-
+                audioPlayer.mp.pause();
+                audioPlayer.mp.release();
                 position = position +1;
                 if (mSongs.size() == position){
                     position = 0;
@@ -238,9 +201,8 @@ public class MediaPlayerFragment extends Fragment {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                audioPlayer.stop();
-
-
+                audioPlayer.mp.pause();
+                audioPlayer.mp.release();
                 position = position -1;
                 if (position < 0){
                     position = mSongs.size() - 1;
@@ -258,8 +220,6 @@ public class MediaPlayerFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
-
                 if (muted == 0) {
                     audioPlayer.mp.setVolume(0, 0);
                     muted = 1;
@@ -270,15 +230,41 @@ public class MediaPlayerFragment extends Fragment {
                     muted = 0;
                     button_mute.setBackgroundResource(R.drawable.ic_volume);
                 }
-
-
-
-
-
         }});
 
         return view;
     }
+
+    //  Create timelabel
+    public String createTimeLabel(int time){
+
+        String timeLabel = "";
+        int min = time / 1000 / 60;
+        int sec = time / 1000 % 60;
+
+        timeLabel = min + ":";
+        if (sec < 10) timeLabel += "0";
+        timeLabel += sec;
+
+        return timeLabel;
+
+    }
+
+    //    Handler for thread
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int currentPosition = msg.what;
+            positionBar.setProgress(currentPosition);
+            String elapsedTime = createTimeLabel(currentPosition);
+            elapsedTimeLabel.setText(elapsedTime);
+
+            String remaingTime = createTimeLabel(totalTime - currentPosition);
+            remainingTimeLabel.setText(remaingTime);
+        }
+    };
+
     public void updateInfo(){
 
         Glide.with(this)

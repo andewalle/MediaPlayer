@@ -25,11 +25,8 @@ public class ListSongsFragment extends Fragment {
 
 
     private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<Song> mSongs = new ArrayList<>();
-    private SectionsStatePagerAdapter mSectionStatePagerAdapter;
     private RecyclerView recyclerView;
-    public String name;
 
     AudioPlayer audioPlayer;
 
@@ -45,10 +42,9 @@ public class ListSongsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
 
-        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
+//        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerv_view);
-
 
         //Hämta audioplayer från bundle. inte skapa ny
 
@@ -56,8 +52,6 @@ public class ListSongsFragment extends Fragment {
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
         }
-
-        //audioPlayer = (AudioPlayer)  new AudioPlayer(name, getContext());
 
         Log.d(TAG, "initRecyclerView: init recyclerview.");
         recyclerView =  view.findViewById(R.id.recyclerv_view);
@@ -76,18 +70,21 @@ public class ListSongsFragment extends Fragment {
 
         return view;
     }
-
+//  Initiating the song list and song filename list
     private void initSongList() throws IOException {
 
         AssetManager assetManager = getContext().getAssets();
         String[] files = assetManager.list("");
+
+        if (files == null){
+            return;
+        }
 
         List<String> it = new LinkedList<String>(Arrays.asList(files));
         for (int i = 0; i <it.size(); i++) {
             if (it.get(i).endsWith(".mp3")){
                 mNames.add(it.get(i));
             }
-
         }
 
         Log.d("list", it.toString());
@@ -102,6 +99,7 @@ public class ListSongsFragment extends Fragment {
             String title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
             String artist = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
             String duration = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            String album = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
             String fileName = mNames.get(i);
             byte cover [] = mediaMetadataRetriever.getEmbeddedPicture();
             Bitmap bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
@@ -109,7 +107,7 @@ public class ListSongsFragment extends Fragment {
 
                 bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
             }
-            Song song = new Song(artist, duration, title, fileName, bitmap);
+            Song song = new Song(artist, duration, title, fileName, album, bitmap);
             mSongs.add(song);
 
         }

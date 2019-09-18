@@ -3,6 +3,7 @@ package com.example.mediaplayer2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,29 +11,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.material.tabs.TabLayout;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-//
-    Context context; //= getApplicationContext();
+
+    Context context;
     AudioPlayer ap ;
-//
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         Log.d(TAG, "onCreate: started.");
         context = getApplicationContext();
-        ap = new AudioPlayer("", context, this);
+        ap = new AudioPlayer("", context);
 
-//
+//      Sending the audioplayer to ListSongsFragment
         Intent intent = new Intent(MainActivity.this , ListSongsFragment.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("audioplayer", ap);
         intent.putExtras(bundle);
-//
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         ListSongsFragment fragment = new ListSongsFragment();
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentTransaction.add(R.id.container, fragment);
         fragmentTransaction.commit();
+
 
     }
 
