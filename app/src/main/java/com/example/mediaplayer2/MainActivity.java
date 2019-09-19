@@ -1,10 +1,8 @@
 package com.example.mediaplayer2;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
     Context context;
     AudioPlayer ap ;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

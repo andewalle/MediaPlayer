@@ -48,7 +48,25 @@ public class ListSongsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
 
-//        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
+        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
+
+        Button button_fav = (Button) fragmentView.findViewById(R.id.btn_favouriteList);
+        button_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("audioplayer", audioPlayer);
+
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FavouritesFragment myFragment = new FavouritesFragment();
+                myFragment.getList(mSongs);
+                myFragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
+
+
+            }
+        });
 
         recyclerView = view.findViewById(R.id.recyclerv_view);
 

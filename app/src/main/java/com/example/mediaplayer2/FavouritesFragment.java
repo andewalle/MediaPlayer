@@ -43,9 +43,8 @@ public class FavouritesFragment extends Fragment {
         return mSongs;
     }
 
-    public void setmSongs(ArrayList<Song> mSongs) {
-        this.mSongs = mSongs;
-    }
+
+
 
     public AudioPlayer getAudioPlayer() {
         return audioPlayer;
@@ -55,11 +54,28 @@ public class FavouritesFragment extends Fragment {
         this.audioPlayer = audioPlayer;
     }
 
-    private ArrayList<Song> mSongs = new ArrayList<>();
+    private ArrayList<Song> mSongs;
+    private ArrayList<Song> mFavList = new ArrayList<>();
     private RecyclerView recyclerView;
+
 
     AudioPlayer audioPlayer;
 
+    public void getList(ArrayList<Song> mSongs){
+
+        this.mSongs = mSongs;
+
+    }
+
+//    public void initFavList(){
+//
+//        for (int i = 0; i < mSongs.size() ; i++) {
+//            if (mSongs.get(i).getFav()){
+//                mFavList.add(mSongs.get(i));
+//            }
+//
+//        }
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,14 +86,15 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
 
 //        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerv_view);
+//        recyclerView = view.findViewById(R.id.recyclerv_view);
+
+//        initFavList();
 
         //Hämta audioplayer från bundle. inte skapa ny
 
@@ -86,13 +103,15 @@ public class FavouritesFragment extends Fragment {
             audioPlayer = bundle.getParcelable("audioplayer" );
         }
 
+
+
         Log.d(TAG, "initRecyclerView: init recyclerview.");
         recyclerView =  view.findViewById(R.id.recyclerv_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
         recyclerView.setAdapter(adapter);
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
