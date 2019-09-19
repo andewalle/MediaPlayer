@@ -11,15 +11,27 @@ public class Song{
     private String fileName;
     private String album;
     private Bitmap cover;
+    private int favorite;
+
+    public Boolean getFav() {
+        return fav;
+    }
+
+    public void setFav(Boolean fav) {
+        this.fav = fav;
+    }
+
+    private Boolean fav;
 
 
 
-    public Song(String artist, String duration, String title, String fileName, String album, Bitmap cover) {
+    public Song(String artist, String duration, String title, String fileName, String album, Bitmap cover, Boolean fav) {
         this.artist = artist;
         this.duration = duration;
         this.title = title;
         this.fileName = fileName;
         this.cover = cover;
+        this.fav = fav;
     }
 
     public String getArtist() {
@@ -68,5 +80,17 @@ public class Song{
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+
+    public int getFavorite() {
+        if (fav){
+            return R.drawable.ic_favfull;
+        }
+        else return R.drawable.ic_favourite;
+    }
+
+    public void setFavorite(int favorite) {
+        this.favorite = favorite;
     }
 }

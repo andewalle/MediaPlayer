@@ -16,7 +16,7 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Insert song"
         android:id="@+id/image_name"
@@ -28,6 +28,15 @@
 
 
         />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_favourite"
+        android:id="@+id/btn_favourite"/>
 
 
 </RelativeLayout>

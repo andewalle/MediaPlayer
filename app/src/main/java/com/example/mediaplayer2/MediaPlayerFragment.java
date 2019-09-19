@@ -38,6 +38,10 @@ public class MediaPlayerFragment extends Fragment {
     private ImageView imageHolder;
     private TextView infoText;
 
+    public ArrayList<Song> getmSongs() {
+        return mSongs;
+    }
+
     private ArrayList<Song> mSongs = new ArrayList<>();
     private int position;
 
@@ -46,6 +50,8 @@ public class MediaPlayerFragment extends Fragment {
         this.mSongs = mSongs;
         this.position = position;
     }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,11 +177,11 @@ public class MediaPlayerFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("audioplayer", audioPlayer);
 
-
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 ListSongsFragment myFragment = new ListSongsFragment();
                 myFragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
+                myFragment.setmSongs(mSongs);
 
             }
         });

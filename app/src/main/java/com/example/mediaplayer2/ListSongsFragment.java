@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,9 +25,12 @@ import java.util.List;
 public class ListSongsFragment extends Fragment {
 
     private static final String TAG = "ListSongsFragment";
-
-
     private ArrayList<String> mNames = new ArrayList<>();
+
+    public void setmSongs(ArrayList<Song> mSongs) {
+        this.mSongs = mSongs;
+    }
+
     private ArrayList<Song> mSongs = new ArrayList<>();
     private RecyclerView recyclerView;
 
@@ -53,6 +59,12 @@ public class ListSongsFragment extends Fragment {
             audioPlayer = bundle.getParcelable("audioplayer" );
         }
 
+        try {
+            initSongList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.d(TAG, "initRecyclerView: init recyclerview.");
         recyclerView =  view.findViewById(R.id.recyclerv_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
@@ -61,11 +73,9 @@ public class ListSongsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        try {
-            initSongList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
+
 
 
         return view;
@@ -73,45 +83,53 @@ public class ListSongsFragment extends Fragment {
 //  Initiating the song list and song filename list
     private void initSongList() throws IOException {
 
-        AssetManager assetManager = getContext().getAssets();
-        String[] files = assetManager.list("");
 
-        if (files == null){
-            return;
-        }
+        if (mSongs.size() < 1) {
+            AssetManager assetManager = getContext().getAssets();
+            String[] files = assetManager.list("");
 
-        List<String> it = new LinkedList<String>(Arrays.asList(files));
-        for (int i = 0; i <it.size(); i++) {
-            if (it.get(i).endsWith(".mp3")){
-                mNames.add(it.get(i));
+            if (files == null) {
+                return;
             }
-        }
 
-        Log.d("list", it.toString());
-        Log.d("list", mNames.toString());
-        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-
-
-        for (int i = 0; i < mNames.size(); i++) {
-            AssetFileDescriptor fileDescriptor = getContext().getAssets().openFd(mNames.get(i));
-            mediaMetadataRetriever.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
-
-            String title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-            String artist = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-            String duration = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-            String album = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-            String fileName = mNames.get(i);
-            byte cover [] = mediaMetadataRetriever.getEmbeddedPicture();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
-            if (cover != null) {
-
-                bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
+            List<String> it = new LinkedList<String>(Arrays.asList(files));
+            for (int i = 0; i < it.size(); i++) {
+                if (it.get(i).endsWith(".mp3")) {
+                    mNames.add(it.get(i));
+                }
             }
-            Song song = new Song(artist, duration, title, fileName, album, bitmap);
-            mSongs.add(song);
 
+            Log.d("list", it.toString());
+            Log.d("list", mNames.toString());
+            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+
+
+            for (int i = 0; i < mNames.size(); i++) {
+
+                AssetFileDescriptor fileDescriptor = getContext().getAssets().openFd(mNames.get(i));
+                mediaMetadataRetriever.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+                String title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                String artist = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                String duration = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                String album = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+                String fileName = mNames.get(i);
+                byte cover[] = mediaMetadataRetriever.getEmbeddedPicture();
+                Boolean fav = false;
+                Bitmap bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
+                if (cover != null) {
+
+                    bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
+                }
+                Song song = new Song(artist, duration, title, fileName, album, bitmap, fav);
+                mSongs.add(song);
+
+            }
+            Log.d("artist123", mSongs.get(0).getArtist());
+            Log.d("duration", mSongs.get(0).getDuration());
         }
-        Log.d("artist123", mSongs.get(0).getArtist());
-        Log.d("duration", mSongs.get(0).getDuration());
+        else return;
+
+
     }
+
 }

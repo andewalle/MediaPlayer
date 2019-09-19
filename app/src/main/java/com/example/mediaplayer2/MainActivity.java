@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     Context context;
     AudioPlayer ap ;
+
 
 
     @Override
@@ -46,8 +49,26 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentTransaction.add(R.id.container, fragment);
         fragmentTransaction.commit();
+        final Button button_favourite = (Button) findViewById(R.id.btn_favouriteList);
+        button_favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("audioplayer", ap);
+
+
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FavouritesFragment myFragment = new FavouritesFragment();
+                myFragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
+
+
+            }
+        });
 
 
     }
+
 
 }
