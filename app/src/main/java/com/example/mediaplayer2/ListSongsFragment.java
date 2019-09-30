@@ -115,12 +115,21 @@ public class ListSongsFragment extends Fragment {
     }
     public ArrayList<Song> initFavList(){
 
-        for (int i = 0; i < mSongs.size() ; i++) {
-            if (mSongs.get(i).getFav() == true){
-
-                mFavList.add(mSongs.get(i));
+        for (int i = 0; i < mSongs.size(); i++) {
+            if (mSongs.get(i).getFav()){
+                if (mFavList.size() == 0){
+                    mFavList.add(mSongs.get(i));
+                }
+                for (int j = 0; j < mFavList.size() ; j++) {
+                    if (mFavList.get(j).equals(mSongs.get(i))){}
+                    else{ mFavList.add(mSongs.get(i));}
+                }
             }
-
+        }
+        for (int j = 0; j < mFavList.size() ; j++) {
+            if (!mFavList.get(j).getFav()){
+                mFavList.remove(j);
+            }
         }
         return mFavList;
     }
