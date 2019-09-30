@@ -9,7 +9,7 @@
         android:id="@+id/coverimage"
         android:src="@mipmap/ic_launcher"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="60dp"
         />
 
     <TextView
@@ -63,7 +63,7 @@
         android:background="@drawable/ic_pause"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         />
     <Button
         android:id="@+id/btn_back"
@@ -72,7 +72,7 @@
         android:background="@drawable/ic_previous"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="35dp"
         android:layout_marginLeft="40dp"
         />
     <Button
@@ -82,7 +82,7 @@
         android:background="@drawable/ic_next"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="35dp"
         android:layout_marginRight="40dp"
 
         />

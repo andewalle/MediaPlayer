@@ -176,6 +176,7 @@ public class MediaPlayerFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("audioplayer", audioPlayer);
+                bundle.putParcelableArrayList("list", mSongs);
 
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 ListSongsFragment myFragment = new ListSongsFragment();

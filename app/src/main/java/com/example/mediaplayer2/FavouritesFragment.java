@@ -93,7 +93,7 @@ public class FavouritesFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
-            mSongs = bundle.getParcelable("list");
+            mSongs = bundle.getParcelableArrayList("list");
         }
 
 

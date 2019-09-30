@@ -89,6 +89,7 @@ public class ListSongsFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
+//            mSongs = bundle.getParcelableArrayList("list");
         }
 
         try {

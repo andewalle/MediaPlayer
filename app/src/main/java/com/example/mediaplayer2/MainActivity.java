@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("audioplayer", ap);
-                mSongs = fragment.getmSongs();
+                mSongs = fragment.initFavList();
                 bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
 
 
