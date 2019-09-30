@@ -90,17 +90,10 @@ public class FavouritesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
 
-//        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
-
-//        recyclerView = view.findViewById(R.id.recyclerv_view);
-
-//        initFavList();
-
-        //Hämta audioplayer från bundle. inte skapa ny
-
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
+            mSongs = bundle.getParcelable("list");
         }
 
 
@@ -109,9 +102,6 @@ public class FavouritesFragment extends Fragment {
         recyclerView =  view.findViewById(R.id.recyclerv_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
         recyclerView.setAdapter(adapter);
-
-
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 

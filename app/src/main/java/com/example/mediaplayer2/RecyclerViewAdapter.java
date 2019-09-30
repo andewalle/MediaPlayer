@@ -70,12 +70,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 holder.btn_fav.setImageResource(mSongs.get(position).getFavorite());
 
 
-
-
-
-
-
-
 //                Song tempSong = mSongs.get(holder.getAdapterPosition());
 
 
@@ -132,6 +126,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("audioplayer", mAudioPlayer);
 
+
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 MediaPlayerFragment myFragment = new MediaPlayerFragment();
                 myFragment.setArguments(bundle);
@@ -150,7 +145,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mSongs.size();
+        if (mSongs == null)
+        {return 0;}
+        else{
+        return mSongs.size();}
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

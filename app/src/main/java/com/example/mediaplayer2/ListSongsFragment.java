@@ -1,10 +1,13 @@
 package com.example.mediaplayer2;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +28,22 @@ import java.util.List;
 public class ListSongsFragment extends Fragment {
 
     private static final String TAG = "ListSongsFragment";
+
+    public ArrayList<Song> getmSongs() {
+        return mSongs;
+    }
+
+    private ArrayList<Song> mSongs = new ArrayList<>();
     private ArrayList<String> mNames = new ArrayList<>();
+    private ArrayList<Song> mFavList = new ArrayList<>();
 
     public void setmSongs(ArrayList<Song> mSongs) {
         this.mSongs = mSongs;
     }
 
-    private ArrayList<Song> mSongs = new ArrayList<>();
+
+
+
     private RecyclerView recyclerView;
 
     AudioPlayer audioPlayer;
@@ -50,23 +62,25 @@ public class ListSongsFragment extends Fragment {
 
         View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
 
-        Button button_fav = (Button) fragmentView.findViewById(R.id.btn_favouriteList);
-        button_fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("audioplayer", audioPlayer);
-
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                FavouritesFragment myFragment = new FavouritesFragment();
-                myFragment.getList(mSongs);
-                myFragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
-
-
-            }
-        });
+//        Button button_fav = (Button) fragmentView.findViewById(R.id.btn_favouriteList);
+//        button_fav.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelable("audioplayer", audioPlayer);
+//                bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
+//
+//
+//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                FavouritesFragment myFragment = new FavouritesFragment();
+//                myFragment.setArguments(bundle);
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
+////                myFragment.getList(mSongs);
+//
+//
+//            }
+//        });
 
         recyclerView = view.findViewById(R.id.recyclerv_view);
 
@@ -97,6 +111,17 @@ public class ListSongsFragment extends Fragment {
 
 
         return view;
+    }
+    public ArrayList<Song> initFavList(){
+
+        for (int i = 0; i < mSongs.size() ; i++) {
+            if (mSongs.get(i).getFav() == true){
+
+                mFavList.add(mSongs.get(i));
+            }
+
+        }
+        return mFavList;
     }
 //  Initiating the song list and song filename list
     private void initSongList() throws IOException {

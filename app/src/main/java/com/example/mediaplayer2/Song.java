@@ -1,8 +1,10 @@
 package com.example.mediaplayer2;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Song{
+public class Song implements Parcelable {
 
 
     private String artist;
@@ -12,6 +14,30 @@ public class Song{
     private String album;
     private Bitmap cover;
     private int favorite;
+
+    protected Song(Parcel in) {
+        artist = in.readString();
+        duration = in.readString();
+        title = in.readString();
+        fileName = in.readString();
+        album = in.readString();
+        cover = in.readParcelable(Bitmap.class.getClassLoader());
+        favorite = in.readInt();
+        byte tmpFav = in.readByte();
+        fav = tmpFav == 0 ? null : tmpFav == 1;
+    }
+
+    public static final Creator<Song> CREATOR = new Creator<Song>() {
+        @Override
+        public Song createFromParcel(Parcel in) {
+            return new Song(in);
+        }
+
+        @Override
+        public Song[] newArray(int size) {
+            return new Song[size];
+        }
+    };
 
     public Boolean getFav() {
         return fav;
@@ -92,5 +118,22 @@ public class Song{
 
     public void setFavorite(int favorite) {
         this.favorite = favorite;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(artist);
+        parcel.writeString(duration);
+        parcel.writeString(title);
+        parcel.writeString(fileName);
+        parcel.writeString(album);
+        parcel.writeParcelable(cover, i);
+        parcel.writeInt(favorite);
+        parcel.writeByte((byte) (fav == null ? 0 : fav ? 1 : 2));
     }
 }
