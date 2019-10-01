@@ -16,9 +16,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import com.google.android.material.tabs.TabLayout;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         Log.d(TAG, "onCreate: started.");
         context = getApplicationContext();
         ap = new AudioPlayer("", context);
@@ -64,26 +60,32 @@ public class MainActivity extends AppCompatActivity {
         button_favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 FavouritesFragment favFrag = new FavouritesFragment();
-
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("audioplayer", ap);
                 mSongs = fragment.initFavList();
                 bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
-
-
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-
                 favFrag.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, favFrag).addToBackStack(null).commit();
+            }
+        });
 
+        final Button button_songList = (Button) findViewById(R.id.btn_songList);
 
+        button_songList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+//                mSongs = fragment.getmSongs();
+                bundle.putParcelable("audioplayer", ap);
+                bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
             }
         });
 
 
     }
-
-
 }

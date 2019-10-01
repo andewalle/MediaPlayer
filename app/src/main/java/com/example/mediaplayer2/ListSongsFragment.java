@@ -41,13 +41,9 @@ public class ListSongsFragment extends Fragment {
         this.mSongs = mSongs;
     }
 
-
-
-
     private RecyclerView recyclerView;
 
     AudioPlayer audioPlayer;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,26 +57,6 @@ public class ListSongsFragment extends Fragment {
         View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
 
         View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
-
-//        Button button_fav = (Button) fragmentView.findViewById(R.id.btn_favouriteList);
-//        button_fav.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("audioplayer", audioPlayer);
-//                bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
-//
-//
-//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-//                FavouritesFragment myFragment = new FavouritesFragment();
-//                myFragment.setArguments(bundle);
-//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, myFragment).addToBackStack(null).commit();
-////                myFragment.getList(mSongs);
-//
-//
-//            }
-//        });
 
         recyclerView = view.findViewById(R.id.recyclerv_view);
 
@@ -97,31 +73,31 @@ public class ListSongsFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Log.d(TAG, "initRecyclerView: init recyclerview.");
         recyclerView =  view.findViewById(R.id.recyclerv_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
         recyclerView.setAdapter(adapter);
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-
-
-
-
         return view;
+
     }
     public ArrayList<Song> initFavList(){
-
         for (int i = 0; i < mSongs.size(); i++) {
             if (mSongs.get(i).getFav()){
                 if (mFavList.size() == 0){
                     mFavList.add(mSongs.get(i));
                 }
-                for (int j = 0; j < mFavList.size() ; j++) {
-                    if (mFavList.get(j).equals(mSongs.get(i))){}
+                else{
+                    boolean found = false;
+                    for (int j = 0; j < mFavList.size() ; j++) {
+                        if (mSongs.get(i).getFileName().equals(mFavList.get(j).getFileName())){
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found){
+                        found = false;
+                    }
                     else{ mFavList.add(mSongs.get(i));}
                 }
             }
@@ -134,7 +110,7 @@ public class ListSongsFragment extends Fragment {
         return mFavList;
     }
 //  Initiating the song list and song filename list
-    private void initSongList() throws IOException {
+    public void initSongList() throws IOException {
 
 
         if (mSongs.size() < 1) {
@@ -170,7 +146,6 @@ public class ListSongsFragment extends Fragment {
                 Boolean fav = false;
                 Bitmap bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
                 if (cover != null) {
-
                     bitmap = BitmapFactory.decodeByteArray(cover, 0, cover.length);
                 }
                 Song song = new Song(artist, duration, title, fileName, album, bitmap, fav);

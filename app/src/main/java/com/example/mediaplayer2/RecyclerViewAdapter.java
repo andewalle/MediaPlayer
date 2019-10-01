@@ -72,11 +72,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 //                Song tempSong = mSongs.get(holder.getAdapterPosition());
 
-
-
-
-
-
 //                mSongs.get(position).setFav(true);
 //                favorites.add(mSongs.get(holder.getAdapterPosition()));
 //

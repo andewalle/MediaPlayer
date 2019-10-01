@@ -43,9 +43,6 @@ public class FavouritesFragment extends Fragment {
         return mSongs;
     }
 
-
-
-
     public AudioPlayer getAudioPlayer() {
         return audioPlayer;
     }
@@ -86,7 +83,6 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
 
@@ -95,8 +91,6 @@ public class FavouritesFragment extends Fragment {
             audioPlayer = bundle.getParcelable("audioplayer" );
             mSongs = bundle.getParcelableArrayList("list");
         }
-
-
 
         Log.d(TAG, "initRecyclerView: init recyclerview.");
         recyclerView =  view.findViewById(R.id.recyclerv_view);
