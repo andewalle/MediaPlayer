@@ -57,27 +57,10 @@ public class FavouritesFragment extends Fragment {
 
 
     AudioPlayer audioPlayer;
-
-    public void getList(ArrayList<Song> mSongs){
-
-        this.mSongs = mSongs;
-
-    }
-
-//    public void initFavList(){
-//
-//        for (int i = 0; i < mSongs.size() ; i++) {
-//            if (mSongs.get(i).getFav()){
-//                mFavList.add(mSongs.get(i));
-//            }
-//
-//        }
-//    }
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -97,7 +80,6 @@ public class FavouritesFragment extends Fragment {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mSongs, audioPlayer);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
         return view;
     }

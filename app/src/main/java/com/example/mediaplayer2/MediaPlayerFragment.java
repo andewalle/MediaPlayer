@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -77,6 +78,9 @@ public class MediaPlayerFragment extends Fragment {
         infoText = (TextView) view.findViewById(R.id.infotext);
 
         volumeBar = (SeekBar) view.findViewById(R.id.volume);
+
+
+
 
 //        Song seekbar control
         positionBar.setOnSeekBarChangeListener(

@@ -1,21 +1,15 @@
 package com.example.mediaplayer2;
-import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,10 +22,6 @@ import java.util.List;
 public class ListSongsFragment extends Fragment {
 
     private static final String TAG = "ListSongsFragment";
-
-    public ArrayList<Song> getmSongs() {
-        return mSongs;
-    }
 
     private ArrayList<Song> mSongs = new ArrayList<>();
     private ArrayList<String> mNames = new ArrayList<>();
@@ -82,6 +72,15 @@ public class ListSongsFragment extends Fragment {
 
     }
     public ArrayList<Song> initFavList(){
+
+        int size = mFavList.size();
+
+        for (int j = size -1; j >= 0 ; j--) {
+            if (!mFavList.get(j).getFav()) {
+                mFavList.remove(j);
+            }
+        }
+
         for (int i = 0; i < mSongs.size(); i++) {
             if (mSongs.get(i).getFav()){
                 if (mFavList.size() == 0){
@@ -102,11 +101,7 @@ public class ListSongsFragment extends Fragment {
                 }
             }
         }
-        for (int j = 0; j < mFavList.size() ; j++) {
-            if (!mFavList.get(j).getFav()){
-                mFavList.remove(j);
-            }
-        }
+
         return mFavList;
     }
 //  Initiating the song list and song filename list

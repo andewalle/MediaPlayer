@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-//                mSongs = fragment.getmSongs();
                 bundle.putParcelable("audioplayer", ap);
                 bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();

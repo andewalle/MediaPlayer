@@ -11,10 +11,10 @@
     <Button
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
 
         android:layout_alignParentBottom="true"
-        android:background="@drawable/ic_favfull"
+        android:background="@drawable/ic_favlist"
         android:id="@+id/btn_favouriteList"
         android:layout_alignParentRight="true"
         android:layout_marginRight="100dp"
@@ -23,7 +23,7 @@
     <Button
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/ic_list_alt_24px"
 

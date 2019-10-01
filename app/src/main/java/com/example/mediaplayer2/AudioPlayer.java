@@ -1,33 +1,23 @@
 package com.example.mediaplayer2;
 import java.io.IOException;
-import java.io.Serializable;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import java.util.ArrayList;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class AudioPlayer implements Parcelable {
 
     private String fileName;
     private Context contex;
     public MediaPlayer mp;
-
+    ArrayList<Song> mSongs = new ArrayList<>();
 
     //Constructor
     public AudioPlayer(String name, Context context) {
         fileName = name;
         contex = context;
-
-
     }
 
     protected AudioPlayer(Parcel in) {
@@ -46,31 +36,24 @@ public class AudioPlayer implements Parcelable {
         }
     };
 
-    public void checkAudioPlayer(final String songName){
+    public void checkAudioPlayer(final String songName, final ArrayList<Song> mSongs){
 
         if (mp == null){
+            this.mSongs = mSongs;
             playAudio(songName);
         }
 
         else{
+            this.mSongs = mSongs;
             mp.pause();
             mp.release();
             mp = null;
             playAudio(songName);
         }
-
-    }
-
-    public void checkAudioPlayerStop(){
-        if (mp != null){
-            mp.stop();
-        }
-        else{}
-
     }
 
     //Play Audio
-    public void playAudio(final String songName) {
+    public void playAudio(String songName) {
 
         mp = new MediaPlayer();
 
@@ -84,33 +67,35 @@ public class AudioPlayer implements Parcelable {
             mp.setDataSource(descriptor.getFileDescriptor(),
                     descriptor.getStartOffset(), descriptor.getLength());
             descriptor.close();
-
             mp.prepare();
             mp.setLooping(true);
-            mp.start();
             mp.setVolume(0.5f, 0.5f);
+            mp.start();
 
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    try {
+                        for (int i = 0; i <mSongs.size() ; i++) {
+                            if (mSongs.get(i).getFileName().equals(fileName))
+                            {
+                                String song = mSongs.get(i+1).getFileName();
+                                checkAudioPlayer(song, mSongs);
+                            }
+                        }
+                        mp.setLooping(true);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (IllegalArgumentException | IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-//    public String createTimeLabel(int time){
-//
-//        String timeLabel = "";
-//        int min = time / 1000 / 60;
-//        int sec = time / 1000 % 60;
-//
-//        timeLabel = min + ":";
-//        if (sec < 10) timeLabel += "0";
-//        timeLabel += sec;
-//
-//        return timeLabel;
-//
-//    }
 
     //Stop Audio
     public void stop() {
