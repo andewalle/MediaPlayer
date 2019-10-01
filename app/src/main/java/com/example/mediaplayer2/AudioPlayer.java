@@ -97,14 +97,6 @@ public class AudioPlayer implements Parcelable {
         }
     }
 
-    //Stop Audio
-    public void stop() {
-        mp.stop();
-        mp.release();
-        mp = null;
-
-    }
-
     public void pause(){
         mp.pause();
     }

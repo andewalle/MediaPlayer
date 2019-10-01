@@ -46,8 +46,6 @@ public class ListSongsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.listsongsfragment_layout, container, false);
 
-        View fragmentView = inflater.inflate(R.layout.activity_main, container, false);
-
         recyclerView = view.findViewById(R.id.recyclerv_view);
 
         //Hämta audioplayer från bundle. inte skapa ny
@@ -55,7 +53,6 @@ public class ListSongsFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
-//            mSongs = bundle.getParcelableArrayList("list");
         }
 
         try {
@@ -151,8 +148,5 @@ public class ListSongsFragment extends Fragment {
             Log.d("duration", mSongs.get(0).getDuration());
         }
         else return;
-
-
     }
-
 }

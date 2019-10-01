@@ -64,48 +64,20 @@ public class Song implements Parcelable {
         return artist;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
     public String getDuration() {
         return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getFileName() {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public Bitmap getCover() {
         return cover;
-    }
-
-    public void setCover(Bitmap cover) {
-        this.cover = cover;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
     }
 
 
@@ -114,10 +86,6 @@ public class Song implements Parcelable {
             return R.drawable.ic_favfull;
         }
         else return R.drawable.ic_favourite;
-    }
-
-    public void setFavorite(int favorite) {
-        this.favorite = favorite;
     }
 
     @Override

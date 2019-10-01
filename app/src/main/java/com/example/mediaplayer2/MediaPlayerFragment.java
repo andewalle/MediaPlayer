@@ -64,23 +64,15 @@ public class MediaPlayerFragment extends Fragment {
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-            // Inflate the layout for this fragment
-            View view = inflater.inflate(R.layout.mediaplayer_layout, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.mediaplayer_layout, container, false);
 
         positionBar = (SeekBar) view.findViewById(R.id.seekbar);
-
         remainingTimeLabel = (TextView) view.findViewById(R.id.timeleft);
-
         elapsedTimeLabel = (TextView) view.findViewById(R.id.elapsedtime);
-
         imageHolder = (ImageView) view.findViewById(R.id.coverimage);
-
         infoText = (TextView) view.findViewById(R.id.infotext);
-
         volumeBar = (SeekBar) view.findViewById(R.id.volume);
-
-
-
 
 //        Song seekbar control
         positionBar.setOnSeekBarChangeListener(
@@ -92,7 +84,6 @@ public class MediaPlayerFragment extends Fragment {
                             positionBar.setProgress(progress);
                         }
                     }
-
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) { }
 
@@ -111,7 +102,6 @@ public class MediaPlayerFragment extends Fragment {
                         float volumeNum = progress / 100f;
                         audioPlayer.mp.setVolume(volumeNum, volumeNum);
                     }
-
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) { }
 
@@ -128,9 +118,6 @@ public class MediaPlayerFragment extends Fragment {
         }
 
         totalTime = audioPlayer.mp.getDuration();
-
-//        positionBar.setMax(totalTime);
-
         audioPlayer.mp.seekTo(0);
 
         updateInfo();
@@ -169,7 +156,6 @@ public class MediaPlayerFragment extends Fragment {
                     button_start.setBackgroundResource(R.drawable.ic_pause);
 
                 }
-
             }
         });
 
@@ -226,7 +212,6 @@ public class MediaPlayerFragment extends Fragment {
         });
 
         final Button button_mute = (Button) view.findViewById(R.id.btn_mute);
-
         button_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

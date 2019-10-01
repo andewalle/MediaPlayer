@@ -29,35 +29,13 @@ public class FavouritesFragment extends Fragment {
 
 
     private static final String TAG = "FavouritesFragment";
-    private ArrayList<String> mNames = new ArrayList<>();
-
-    public ArrayList<String> getmNames() {
-        return mNames;
-    }
-
-    public void setmNames(ArrayList<String> mNames) {
-        this.mNames = mNames;
-    }
-
-    public ArrayList<Song> getmSongs() {
-        return mSongs;
-    }
-
-    public AudioPlayer getAudioPlayer() {
-        return audioPlayer;
-    }
-
-    public void setAudioPlayer(AudioPlayer audioPlayer) {
-        this.audioPlayer = audioPlayer;
-    }
-
     private ArrayList<Song> mSongs;
     private ArrayList<Song> mFavList = new ArrayList<>();
     private RecyclerView recyclerView;
 
 
     AudioPlayer audioPlayer;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
