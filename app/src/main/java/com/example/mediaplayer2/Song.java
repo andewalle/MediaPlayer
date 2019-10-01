@@ -6,7 +6,6 @@ import android.os.Parcelable;
 
 public class Song implements Parcelable {
 
-
     private String artist;
     private String duration;
     private String title;
@@ -14,6 +13,7 @@ public class Song implements Parcelable {
     private String album;
     private Bitmap cover;
     private int favorite;
+    private Boolean fav;
 
     protected Song(Parcel in) {
         artist = in.readString();
@@ -46,10 +46,6 @@ public class Song implements Parcelable {
     public void setFav(Boolean fav) {
         this.fav = fav;
     }
-
-    private Boolean fav;
-
-
 
     public Song(String artist, String duration, String title, String fileName, String album, Bitmap cover, Boolean fav) {
         this.artist = artist;

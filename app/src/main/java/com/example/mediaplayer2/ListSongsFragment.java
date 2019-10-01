@@ -48,8 +48,7 @@ public class ListSongsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerv_view);
 
-        //Hämta audioplayer från bundle. inte skapa ny
-
+        //Get audioplayer from bundle
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
@@ -66,18 +65,20 @@ public class ListSongsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
-
     }
+
+    //Adding and removing songs from favorite list
     public ArrayList<Song> initFavList(){
 
         int size = mFavList.size();
 
+        //Removes songs that were favorite but are not longer
         for (int j = size -1; j >= 0 ; j--) {
             if (!mFavList.get(j).getFav()) {
                 mFavList.remove(j);
             }
         }
-
+        //Adds songs that are favorite
         for (int i = 0; i < mSongs.size(); i++) {
             if (mSongs.get(i).getFav()){
                 if (mFavList.size() == 0){
@@ -98,9 +99,9 @@ public class ListSongsFragment extends Fragment {
                 }
             }
         }
-
         return mFavList;
     }
+
 //  Initiating the song list and song filename list
     public void initSongList() throws IOException {
 
@@ -119,12 +120,12 @@ public class ListSongsFragment extends Fragment {
                     mNames.add(it.get(i));
                 }
             }
-
             Log.d("list", it.toString());
             Log.d("list", mNames.toString());
             MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
 
 
+            //Creates the song and adds it to the mSongs list
             for (int i = 0; i < mNames.size(); i++) {
 
                 AssetFileDescriptor fileDescriptor = getContext().getAssets().openFd(mNames.get(i));

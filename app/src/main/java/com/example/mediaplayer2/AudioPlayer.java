@@ -36,6 +36,7 @@ public class AudioPlayer implements Parcelable {
         }
     };
 
+    //Checks if media player is null else releases mp
     public void checkAudioPlayer(final String songName, final ArrayList<Song> mSongs){
 
         if (mp == null){
@@ -52,7 +53,7 @@ public class AudioPlayer implements Parcelable {
         }
     }
 
-    //Play Audio
+    //Plays Audio
     public void playAudio(String songName) {
 
         mp = new MediaPlayer();
@@ -96,11 +97,11 @@ public class AudioPlayer implements Parcelable {
             e.printStackTrace();
         }
     }
-
+    //Pause
     public void pause(){
         mp.pause();
     }
-
+    //Continue playing from pause
     public void continuePlay(){
         mp.start();
     }
