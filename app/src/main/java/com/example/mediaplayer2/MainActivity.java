@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
         final Button button_favourite = (Button) findViewById(R.id.btn_favouriteList);
 
+        //Button for the favorite fragment
         button_favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final Button button_songList = (Button) findViewById(R.id.btn_songList);
+
+        //Button for the regular song list fragment
 
         button_songList.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,14 +26,13 @@ public class ListSongsFragment extends Fragment {
     private ArrayList<Song> mSongs = new ArrayList<>();
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<Song> mFavList = new ArrayList<>();
+    private RecyclerView recyclerView;
+
+    AudioPlayer audioPlayer;
 
     public void setmSongs(ArrayList<Song> mSongs) {
         this.mSongs = mSongs;
     }
-
-    private RecyclerView recyclerView;
-
-    AudioPlayer audioPlayer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class ListSongsFragment extends Fragment {
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
         }
-
+        //Calls the initSongList to initiate the song list
         try {
             initSongList();
         } catch (IOException e) {
@@ -99,6 +98,7 @@ public class ListSongsFragment extends Fragment {
                 }
             }
         }
+        //Returns the Favorite List
         return mFavList;
     }
 
@@ -115,6 +115,7 @@ public class ListSongsFragment extends Fragment {
             }
 
             List<String> it = new LinkedList<String>(Arrays.asList(files));
+            //Gets all files that ends with .mp3
             for (int i = 0; i < it.size(); i++) {
                 if (it.get(i).endsWith(".mp3")) {
                     mNames.add(it.get(i));
@@ -125,7 +126,7 @@ public class ListSongsFragment extends Fragment {
             MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
 
 
-            //Creates the song and adds it to the mSongs list
+            //Gets the required metadata from the mp3 file and creates the song then adds it to the mSongs list
             for (int i = 0; i < mNames.size(); i++) {
 
                 AssetFileDescriptor fileDescriptor = getContext().getAssets().openFd(mNames.get(i));
