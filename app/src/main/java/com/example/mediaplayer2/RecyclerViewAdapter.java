@@ -69,6 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //Song names
         holder.songName.setText(mSongs.get(position).getTitle());
+        holder.artistName.setText(mSongs.get(position).getArtist());
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +106,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         CircleImageView image;
         TextView songName;
+        TextView artistName;
         RelativeLayout parentLayout;
         ImageView btn_fav;
 
@@ -112,6 +114,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             image = itemView.findViewById(R.id.image);
             songName = itemView.findViewById(R.id.image_name);
+            artistName = itemView.findViewById(R.id.image_artist);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             btn_fav = itemView.findViewById(R.id.btn_favourite);
 

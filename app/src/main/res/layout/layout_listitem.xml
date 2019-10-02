@@ -14,9 +14,8 @@
         android:src="@mipmap/ic_launcher"
         />
 
-
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:text="Insert song"
         android:id="@+id/image_name"
@@ -24,19 +23,27 @@
         android:textColor="#ffffff"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30dp"
-        android:textSize="17dp"
+        android:textSize="15dp"
+        />
 
-
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Insert song"
+        android:layout_toEndOf="@id/image"
+        android:layout_marginTop="55dp"
+        android:id="@+id/image_artist"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="30dp"
+        android:textSize="10dp"
         />
 
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/ic_favourite"
         android:id="@+id/btn_favourite"/>
-
-
 </RelativeLayout>

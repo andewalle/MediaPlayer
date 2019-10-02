@@ -92,7 +92,7 @@ public class ListSongsFragment extends Fragment {
                         }
                     }
                     if (found){
-                        found = false;
+//                        found = false;
                     }
                     else{ mFavList.add(mSongs.get(i));}
                 }
