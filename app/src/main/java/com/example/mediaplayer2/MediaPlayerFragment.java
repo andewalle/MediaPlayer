@@ -31,11 +31,8 @@ public class MediaPlayerFragment extends Fragment {
     private TextView elapsedTimeLabel;
     private TextView remainingTimeLabel;
     private int totalTime;
-
     private SeekBar volumeBar;
-
     private int muted = 0;
-
     private ImageView imageHolder;
     private TextView infoText;
 
@@ -52,14 +49,11 @@ public class MediaPlayerFragment extends Fragment {
         this.position = position;
     }
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,7 +86,6 @@ public class MediaPlayerFragment extends Fragment {
                 }
         );
 
-
 //        Volume control
         volumeBar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -110,8 +103,7 @@ public class MediaPlayerFragment extends Fragment {
                 }
         );
 
-
-//  Taking the bundle from ListSingsFragment
+//  Taking the bundle from ListSongsFragment or FavoriteFragment
         Bundle bundle = this.getArguments();
         if (bundle != null){
             audioPlayer = bundle.getParcelable("audioplayer" );
@@ -154,7 +146,6 @@ public class MediaPlayerFragment extends Fragment {
                     audioPlayer.continuePlay();
                     playOrStop = 0;
                     button_start.setBackgroundResource(R.drawable.ic_pause);
-
                 }
             }
         });
@@ -167,7 +158,6 @@ public class MediaPlayerFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("audioplayer", audioPlayer);
                 bundle.putParcelableArrayList("list", mSongs);
-
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 ListSongsFragment myFragment = new ListSongsFragment();
                 myFragment.setArguments(bundle);
@@ -177,6 +167,7 @@ public class MediaPlayerFragment extends Fragment {
             }
         });
 
+        //Button and logic for playing next song
         Button button_forward = (Button) view.findViewById(R.id.btn_forward);
         button_forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,10 +181,10 @@ public class MediaPlayerFragment extends Fragment {
                 audioPlayer.playAudio(mSongs.get(position).getFileName());
                 updateInfo();
                 totalTime = audioPlayer.mp.getDuration();
-
-
             }
         });
+
+        //Button and logic for playing previous song
         Button button_back = (Button) view.findViewById(R.id.btn_back);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,10 +198,10 @@ public class MediaPlayerFragment extends Fragment {
                 audioPlayer.playAudio(mSongs.get(position).getFileName());
                 updateInfo();
                 totalTime = audioPlayer.mp.getDuration();
-
             }
         });
 
+        //Button and logic for muting sound
         final Button button_mute = (Button) view.findViewById(R.id.btn_mute);
         button_mute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,7 +218,6 @@ public class MediaPlayerFragment extends Fragment {
                     button_mute.setBackgroundResource(R.drawable.ic_volume);
                 }
         }});
-
         return view;
     }
 
@@ -255,12 +245,12 @@ public class MediaPlayerFragment extends Fragment {
             positionBar.setProgress(currentPosition);
             String elapsedTime = createTimeLabel(currentPosition);
             elapsedTimeLabel.setText(elapsedTime);
-
             String remaingTime = createTimeLabel(totalTime - currentPosition);
             remainingTimeLabel.setText(remaingTime);
         }
     };
 
+    //Updates info for MediaplayerFragment (Picture, song name, artist name)
     public void updateInfo(){
 
         Glide.with(this)

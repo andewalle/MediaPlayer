@@ -29,21 +29,22 @@ public class MainActivity extends AppCompatActivity {
         context = getApplicationContext();
         ap = new AudioPlayer("", context);
 
-//      Sending the audioplayer to ListSongsFragment
+//      Packing the audioplayer to bundle for the ListSongsFragment
         Intent intent = new Intent(MainActivity.this , ListSongsFragment.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("audioplayer", ap);
         intent.putExtras(bundle);
 
+        //Creates and starts ListSongsFragment as start page then sends the bundle
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         final ListSongsFragment fragment = new ListSongsFragment();
         fragment.setArguments(bundle);
         fragmentTransaction.add(R.id.container, fragment);
         fragmentTransaction.commit();
-        final Button button_favourite = (Button) findViewById(R.id.btn_favouriteList);
 
         //Button for the favorite fragment
+        final Button button_favourite = (Button) findViewById(R.id.btn_favouriteList);
         button_favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,10 +59,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button button_songList = (Button) findViewById(R.id.btn_songList);
-
         //Button for the regular song list fragment
-
+        final Button button_songList = (Button) findViewById(R.id.btn_songList);
         button_songList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

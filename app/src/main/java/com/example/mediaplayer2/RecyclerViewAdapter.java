@@ -24,7 +24,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
     private AudioPlayer mAudioPlayer;
 
-
     public RecyclerViewAdapter(Context context, ArrayList<Song> songs, final AudioPlayer audioPlayer){
         mContext = context;
         mSongs = songs;
@@ -78,6 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // Song file name
                 mAudioPlayer.checkAudioPlayer(mSongs.get(position).getFileName(), mSongs);
 
+                //Creates bundle with audioplayer for MediaPlayerFragment
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("audioplayer", mAudioPlayer);
 

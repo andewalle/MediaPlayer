@@ -105,7 +105,6 @@ public class ListSongsFragment extends Fragment {
 //  Initiating the song list and song filename list
     public void initSongList() throws IOException {
 
-
         if (mSongs.size() < 1) {
             AssetManager assetManager = getContext().getAssets();
             String[] files = assetManager.list("");
@@ -113,7 +112,6 @@ public class ListSongsFragment extends Fragment {
             if (files == null) {
                 return;
             }
-
             List<String> it = new LinkedList<String>(Arrays.asList(files));
             //Gets all files that ends with .mp3
             for (int i = 0; i < it.size(); i++) {

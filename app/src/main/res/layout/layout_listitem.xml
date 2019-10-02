@@ -23,7 +23,7 @@
         android:textColor="#ffffff"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30dp"
-        android:textSize="15dp"
+        android:textSize="14dp"
         />
 
     <TextView
@@ -35,7 +35,7 @@
         android:id="@+id/image_artist"
         android:textColor="#ffffff"
         android:layout_marginLeft="30dp"
-        android:textSize="10dp"
+        android:textSize="11dp"
         />
 
     <ImageView

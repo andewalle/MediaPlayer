@@ -10,9 +10,6 @@ public class Song implements Parcelable {
     private String duration;
     private String title;
     private String fileName;
-
-
-
     private String album;
     private Bitmap cover;
     private int favorite;
