@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     AudioPlayer audioPlayer;
     ArrayList<Song> mSongs = new ArrayList<>();
     ArrayList<String> mNames = new ArrayList<>();
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

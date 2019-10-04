@@ -1,5 +1,4 @@
 package com.example.mediaplayer2;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
