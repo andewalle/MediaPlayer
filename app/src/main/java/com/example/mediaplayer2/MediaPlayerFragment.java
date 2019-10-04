@@ -181,6 +181,7 @@ public class MediaPlayerFragment extends Fragment {
                 audioPlayer.playAudio(mSongs.get(position).getFileName());
                 updateInfo();
                 totalTime = audioPlayer.mp.getDuration();
+                button_start.setBackgroundResource(R.drawable.ic_pause);
             }
         });
 
@@ -198,6 +199,7 @@ public class MediaPlayerFragment extends Fragment {
                 audioPlayer.playAudio(mSongs.get(position).getFileName());
                 updateInfo();
                 totalTime = audioPlayer.mp.getDuration();
+                button_start.setBackgroundResource(R.drawable.ic_pause);
             }
         });
 

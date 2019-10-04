@@ -75,6 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked on: "+ mSongs.get(position).getTitle());
                 // Song file name
+
                 mAudioPlayer.checkAudioPlayer(mSongs.get(position).getFileName(), mSongs);
 
                 //Creates bundle with audioplayer for MediaPlayerFragment
