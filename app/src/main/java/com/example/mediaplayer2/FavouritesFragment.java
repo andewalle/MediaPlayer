@@ -29,7 +29,6 @@ public class FavouritesFragment extends Fragment {
 
     private static final String TAG = "FavouritesFragment";
     private ArrayList<Song> mSongs;
-    private ArrayList<Song> mFavList = new ArrayList<>();
     private RecyclerView recyclerView;
     AudioPlayer audioPlayer;
 

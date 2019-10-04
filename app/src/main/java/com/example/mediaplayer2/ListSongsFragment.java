@@ -91,9 +91,7 @@ public class ListSongsFragment extends Fragment {
                             break;
                         }
                     }
-                    if (found){
-//                        found = false;
-                    }
+                    if (found){}
                     else{ mFavList.add(mSongs.get(i));}
                 }
             }
@@ -126,7 +124,6 @@ public class ListSongsFragment extends Fragment {
 
             //Gets the required metadata from the mp3 file and creates the song then adds it to the mSongs list
             for (int i = 0; i < mNames.size(); i++) {
-
                 AssetFileDescriptor fileDescriptor = getContext().getAssets().openFd(mNames.get(i));
                 mediaMetadataRetriever.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
                 String title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
@@ -147,6 +144,5 @@ public class ListSongsFragment extends Fragment {
             Log.d("artist123", mSongs.get(0).getArtist());
             Log.d("duration", mSongs.get(0).getDuration());
         }
-        else return;
     }
 }

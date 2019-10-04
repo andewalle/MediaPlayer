@@ -17,9 +17,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     Context context;
-    AudioPlayer ap ;
+    AudioPlayer audioPlayer;
     ArrayList<Song> mSongs = new ArrayList<>();
     ArrayList<String> mNames = new ArrayList<>();
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started.");
         context = getApplicationContext();
-        ap = new AudioPlayer("", context);
+        audioPlayer = new AudioPlayer("", context);
 
 //      Packing the audioplayer to bundle for the ListSongsFragment
         Intent intent = new Intent(MainActivity.this , ListSongsFragment.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("audioplayer", ap);
+        bundle.putParcelable("audioplayer", audioPlayer);
         intent.putExtras(bundle);
 
         //Creates and starts ListSongsFragment as start page then sends the bundle
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FavouritesFragment favFrag = new FavouritesFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("audioplayer", ap);
+                bundle.putParcelable("audioplayer", audioPlayer);
                 mSongs = fragment.initFavList();
                 bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("audioplayer", ap);
+                bundle.putParcelable("audioplayer", audioPlayer);
                 bundle.putParcelableArrayList("list" , (ArrayList<? extends Parcelable>) mSongs);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 fragment.setArguments(bundle);

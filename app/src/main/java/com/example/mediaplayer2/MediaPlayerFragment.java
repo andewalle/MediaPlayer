@@ -1,10 +1,6 @@
 package com.example.mediaplayer2;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MediaPlayerFragment extends Fragment {
@@ -35,11 +30,6 @@ public class MediaPlayerFragment extends Fragment {
     private int muted = 0;
     private ImageView imageHolder;
     private TextView infoText;
-
-    public ArrayList<Song> getmSongs() {
-        return mSongs;
-    }
-
     private ArrayList<Song> mSongs = new ArrayList<>();
     private int position;
 
@@ -74,7 +64,7 @@ public class MediaPlayerFragment extends Fragment {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         if (fromUser) {
-                            audioPlayer.mp.seekTo(progress);
+                            audioPlayer.mediaPlayer.seekTo(progress);
                             positionBar.setProgress(progress);
                         }
                     }
@@ -93,7 +83,7 @@ public class MediaPlayerFragment extends Fragment {
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                         float volumeNum = progress / 100f;
-                        audioPlayer.mp.setVolume(volumeNum, volumeNum);
+                        audioPlayer.mediaPlayer.setVolume(volumeNum, volumeNum);
                     }
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) { }
@@ -109,19 +99,19 @@ public class MediaPlayerFragment extends Fragment {
             audioPlayer = bundle.getParcelable("audioplayer" );
         }
 
-        totalTime = audioPlayer.mp.getDuration();
-        audioPlayer.mp.seekTo(0);
+        totalTime = audioPlayer.mediaPlayer.getDuration();
+        audioPlayer.mediaPlayer.seekTo(0);
 
         updateInfo();
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (audioPlayer.mp != null) {
+                    while (audioPlayer.mediaPlayer != null) {
                         try {
                             Message msg = new Message();
                             positionBar.setMax(totalTime);
-                            msg.what = audioPlayer.mp.getCurrentPosition();
+                            msg.what = audioPlayer.mediaPlayer.getCurrentPosition();
                             handler.sendMessage(msg);
                             Thread.sleep(1000);
                         }catch (InterruptedException q) {
@@ -172,15 +162,15 @@ public class MediaPlayerFragment extends Fragment {
         button_forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                audioPlayer.mp.pause();
-                audioPlayer.mp.release();
+                audioPlayer.mediaPlayer.pause();
+                audioPlayer.mediaPlayer.release();
                 position = position +1;
                 if (mSongs.size() == position){
                     position = 0;
                 }
                 audioPlayer.playAudio(mSongs.get(position).getFileName());
                 updateInfo();
-                totalTime = audioPlayer.mp.getDuration();
+                totalTime = audioPlayer.mediaPlayer.getDuration();
                 button_start.setBackgroundResource(R.drawable.ic_pause);
             }
         });
@@ -190,15 +180,15 @@ public class MediaPlayerFragment extends Fragment {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                audioPlayer.mp.pause();
-                audioPlayer.mp.release();
+                audioPlayer.mediaPlayer.pause();
+                audioPlayer.mediaPlayer.release();
                 position = position -1;
                 if (position < 0){
                     position = mSongs.size() - 1;
                 }
                 audioPlayer.playAudio(mSongs.get(position).getFileName());
                 updateInfo();
-                totalTime = audioPlayer.mp.getDuration();
+                totalTime = audioPlayer.mediaPlayer.getDuration();
                 button_start.setBackgroundResource(R.drawable.ic_pause);
             }
         });
@@ -210,12 +200,12 @@ public class MediaPlayerFragment extends Fragment {
             public void onClick(View view) {
 
                 if (muted == 0) {
-                    audioPlayer.mp.setVolume(0, 0);
+                    audioPlayer.mediaPlayer.setVolume(0, 0);
                     muted = 1;
                     button_mute.setBackgroundResource(R.drawable.ic_muted);
                 }
                 else {
-                    audioPlayer.mp.setVolume(0.5f, 0.5f);
+                    audioPlayer.mediaPlayer.setVolume(0.5f, 0.5f);
                     muted = 0;
                     button_mute.setBackgroundResource(R.drawable.ic_volume);
                 }

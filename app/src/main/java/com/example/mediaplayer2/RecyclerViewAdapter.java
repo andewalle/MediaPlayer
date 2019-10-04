@@ -20,7 +20,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<Song> mSongs = new ArrayList<>();
+    private ArrayList<Song> mSongs;
     private Context mContext;
     private AudioPlayer mAudioPlayer;
 

@@ -11,7 +11,7 @@ public class AudioPlayer implements Parcelable {
 
     private String fileName;
     private Context contex;
-    public MediaPlayer mp;
+    public MediaPlayer mediaPlayer;
     ArrayList<Song> mSongs = new ArrayList<>();
 
     //Constructor
@@ -36,19 +36,19 @@ public class AudioPlayer implements Parcelable {
         }
     };
 
-    //Checks if media player is null else releases mp
+    //Checks if media player is null else releases mediaPlayer
     public void checkAudioPlayer(final String songName, final ArrayList<Song> mSongs){
 
-        if (mp == null){
+        if (mediaPlayer == null){
             this.mSongs = mSongs;
             playAudio(songName);
         }
 
         else{
             this.mSongs = mSongs;
-            mp.pause();
-            mp.release();
-            mp = null;
+            mediaPlayer.pause();
+            mediaPlayer.release();
+            mediaPlayer = null;
             playAudio(songName);
         }
     }
@@ -56,7 +56,7 @@ public class AudioPlayer implements Parcelable {
     //Plays Audio
     public void playAudio(String songName) {
 
-        mp = new MediaPlayer();
+        mediaPlayer = new MediaPlayer();
 
         try {
             AssetFileDescriptor descriptor;
@@ -65,15 +65,15 @@ public class AudioPlayer implements Parcelable {
             }
             descriptor = contex.getAssets()
                     .openFd(songName);
-            mp.setDataSource(descriptor.getFileDescriptor(),
+            mediaPlayer.setDataSource(descriptor.getFileDescriptor(),
                     descriptor.getStartOffset(), descriptor.getLength());
             descriptor.close();
-            mp.prepare();
-            mp.setLooping(true);
-            mp.setVolume(0.5f, 0.5f);
-            mp.start();
+            mediaPlayer.prepare();
+            mediaPlayer.setLooping(true);
+            mediaPlayer.setVolume(0.5f, 0.5f);
+            mediaPlayer.start();
 
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     try {
@@ -99,11 +99,11 @@ public class AudioPlayer implements Parcelable {
     }
     //Pause
     public void pause(){
-        mp.pause();
+        mediaPlayer.pause();
     }
     //Continue playing from pause
     public void continuePlay(){
-        mp.start();
+        mediaPlayer.start();
     }
 
     @Override
